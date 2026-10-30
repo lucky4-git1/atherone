@@ -42,7 +42,7 @@ export function CTASection({ scrollYProgress, onOpenDemo }) {
           className="relative mx-auto mt-6 max-w-2xl text-base leading-7 text-white/65 sm:text-lg"
         >
           Modular sections, cinema-grade kinetic motion, and an optimized living shader
-          backdrop engineered to win awards and capture enterprise trust.
+          backdrop engineered to capture attention and earn enterprise trust.
         </motion.p>
 
         <motion.div variants={viewportReveal} className="mt-10 flex flex-wrap justify-center gap-4">

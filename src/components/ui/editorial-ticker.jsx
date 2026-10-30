@@ -7,7 +7,7 @@ const TICKER_ITEMS = [
   "ZERO COMPOSITOR DROPS",
   "VOLUMETRIC WEBGL SHADER",
   "INTERACTIVE 3D RUNTIME",
-  "AWWWARDS TIER CRAFT",
+  "SPATIAL STAGING PLATFORM",
   "TACTILE SOUND ARCHITECTURE",
 ]
 
@@ -22,7 +22,7 @@ export function EditorialTicker() {
         transition={{
           repeat: Number.POSITIVE_INFINITY,
           ease: "linear",
-          duration: 28,
+          duration: 32,
         }}
         className="flex w-max items-center gap-10 whitespace-nowrap"
       >
