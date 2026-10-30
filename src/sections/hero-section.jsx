@@ -1,13 +1,14 @@
 import { ScrollExpansionHero } from "../components/ui/scroll-expansion-hero"
 
-export function HeroSection() {
+export function HeroSection({ onOpenDemo }) {
   return (
     <ScrollExpansionHero
-      eyebrow="Scroll-driven product storytelling"
-      title="A premium launch page that unfolds with control."
-      description="Built for serious software reveals. The hero expands into view, motion stays measured, and every layer works with the shader backdrop instead of competing with it."
-      ctaLabel="Enter the experience"
+      eyebrow="Spatial Launch Architecture"
+      title="A flagship interface that commands attention."
+      description="Engineered for serious software reveals. Spatial perspective, cinema-grade kinetic motion, and an atmospheric WebGL backdrop operating in harmonic synchrony."
+      ctaLabel="Request demonstration"
       ctaHref="#experience"
+      onOpenDemo={onOpenDemo}
     />
   )
 }

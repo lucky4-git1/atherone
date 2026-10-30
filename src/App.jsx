@@ -4,6 +4,9 @@ import { Navbar } from "./components/navbar"
 import { Footer } from "./components/footer"
 import { LoadingScreen } from "./components/ui/loading-screen"
 import { WavesOverlay } from "./components/ui/waves-overlay"
+import { EditorialTicker } from "./components/ui/editorial-ticker"
+import { TaglineReveal } from "./components/ui/tagline-reveal"
+import { DemoModal } from "./components/ui/demo-modal"
 import { useNavbarState } from "./hooks/use-navbar-state"
 import { HeroSection } from "./sections/hero-section"
 import { FeatureSection } from "./sections/feature-section"
@@ -61,6 +64,7 @@ const featureSections = [
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const [isDemoOpen, setIsDemoOpen] = useState(false)
   const mainRef = useRef(null)
   const { scrollY, scrollYProgress } = useScroll({
     target: mainRef,
@@ -69,15 +73,13 @@ export default function App() {
   const isScrolled = useNavbarState(scrollY, 48)
 
   useEffect(() => {
-    // Fast, responsive 800ms boot sequence for instant gratification without lag
-    const duration = 850
+    const duration = 800
     const start = window.performance.now()
     let frameId = 0
 
     const tick = (now) => {
       const elapsed = now - start
       const rawProgress = Math.min(elapsed / duration, 1)
-      // Ease out cubic
       const progress = 1 - Math.pow(1 - rawProgress, 3)
       setLoadingProgress(Math.round(progress * 100))
 
@@ -96,22 +98,24 @@ export default function App() {
   }, [])
 
   return (
-    <div className="overflow-x-clip bg-neutral-950 text-white selection:bg-sky-500/30 selection:text-white">
+    <div className="overflow-x-clip bg-neutral-950 text-white selection:bg-sky-500/25 selection:text-white">
       <AnimatePresence>
         {isLoading ? <LoadingScreen key="loading-screen" progress={loadingProgress} /> : null}
       </AnimatePresence>
+
+      <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
 
       <Suspense fallback={<div className="fixed inset-0 z-0 bg-black" />}>
         <ShaderAnimation scrollYProgress={scrollYProgress} />
       </Suspense>
 
       <div className="pointer-events-none fixed inset-0 z-[1]">
-        <WavesOverlay className="opacity-40" />
+        <WavesOverlay className="opacity-35" />
         <div className="ambient-noise opacity-10" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_32%,rgba(2,6,23,0.3)_75%,rgba(2,6,23,0.65))]" />
       </div>
 
-      <Navbar isScrolled={isScrolled} />
+      <Navbar isScrolled={isScrolled} onOpenDemo={() => setIsDemoOpen(true)} />
 
       <motion.div
         initial={false}
@@ -123,7 +127,11 @@ export default function App() {
         className="relative"
       >
         <main ref={mainRef} className="relative z-10 overflow-x-clip">
-          <HeroSection />
+          <HeroSection onOpenDemo={() => setIsDemoOpen(true)} />
+
+          <EditorialTicker />
+
+          <TaglineReveal />
 
           {featureSections.map((section, index) => (
             <FeatureSection
@@ -134,8 +142,12 @@ export default function App() {
             />
           ))}
 
-          <CTASection scrollYProgress={scrollYProgress} />
-          <Footer />
+          <CTASection
+            scrollYProgress={scrollYProgress}
+            onOpenDemo={() => setIsDemoOpen(true)}
+          />
+
+          <Footer onOpenDemo={() => setIsDemoOpen(true)} />
         </main>
       </motion.div>
     </div>

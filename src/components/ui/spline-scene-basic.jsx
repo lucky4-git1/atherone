@@ -1,10 +1,11 @@
 import { Card } from "@/components/ui/card"
 import { Spotlight } from "@/components/ui/spotlight"
 import { SplineScene } from "@/components/ui/splite"
+import { soundEngine } from "@/lib/audio-synthesizer"
 
 const socialLinks = [
   {
-    label: "X",
+    label: "X (Twitter)",
     href: "https://x.com",
     icon: (
       <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
@@ -22,15 +23,6 @@ const socialLinks = [
     ),
   },
   {
-    label: "Instagram",
-    href: "https://www.instagram.com",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
-        <path d="M7.75 2h8.5A5.756 5.756 0 0 1 22 7.75v8.5A5.756 5.756 0 0 1 16.25 22h-8.5A5.756 5.756 0 0 1 2 16.25v-8.5A5.756 5.756 0 0 1 7.75 2Zm8.5 1.75h-8.5A4.004 4.004 0 0 0 3.75 7.75v8.5c0 2.21 1.79 4 4 4h8.5c2.21 0 4-1.79 4-4v-8.5c0-2.21-1.79-4-4-4Zm-4.25 2.5A5.75 5.75 0 1 1 6.25 12 5.756 5.756 0 0 1 12 6.25Zm0 1.75A4 4 0 1 0 16 12a4.004 4.004 0 0 0-4-4Zm6.125-2.125a1.125 1.125 0 1 1-1.125 1.125 1.127 1.127 0 0 1 1.125-1.125Z" />
-      </svg>
-    ),
-  },
-  {
     label: "GitHub",
     href: "https://github.com",
     icon: (
@@ -39,27 +31,9 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    label: "Gmail",
-    href: "mailto:hello@aetherone.design",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
-        <path d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13Zm2.2-.5L12 10.6 19.8 5H4.2ZM20 6.52l-7.42 5.3a1 1 0 0 1-1.16 0L4 6.52V19h16V6.52Z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Telegram",
-    href: "https://telegram.org",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
-        <path d="M21.944 4.662c.295-.12.613.145.54.45l-3.055 14.368c-.056.264-.347.39-.58.252l-4.635-2.744-2.363 2.278a.408.408 0 0 1-.688-.236l-.416-4.237L18.84 7.49c.222-.198-.036-.531-.29-.375L8.41 13.46 4.03 12.092a.404.404 0 0 1-.025-.764L21.944 4.662Z" />
-      </svg>
-    ),
-  },
 ]
 
-export function SplineSceneBasic() {
+export function SplineSceneBasic({ onOpenDemo }) {
   return (
     <Card className="relative min-h-[540px] w-full overflow-hidden rounded-[2rem] border-white/12 bg-neutral-950/95 shadow-[0_30px_100px_rgba(0,0,0,0.5)] lg:min-h-[580px]">
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="rgba(255,255,255,0.14)" />
@@ -68,46 +42,59 @@ export function SplineSceneBasic() {
       <div className="flex h-full flex-col lg:flex-row">
         <div className="relative z-10 flex flex-1 flex-col justify-between border-b border-white/10 p-7 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1 text-[11px] font-medium tracking-[0.24em] text-white/60">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1 text-[11px] font-mono uppercase tracking-[0.24em] text-white/60">
               <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
-              <span>Closing frame</span>
+              <span>Closing Frame // System Exit</span>
             </div>
 
             <h2 className="mt-7 text-4xl font-semibold leading-[0.98] tracking-[-0.05em] text-white md:text-[2.8rem] xl:text-5xl">
               Built to leave a premium final impression.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-neutral-300">
-              A refined footer for product launches, brand films, and immersive digital
-              experiences. Calm structure on the left, living 3D presence on the right.
+              A refined footer for flagship releases, brand films, and immersive digital
+              experiences. Calm editorial architecture on the left, living 3D presence on the right.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-5">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/45 font-medium">Explore</p>
+                <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-white/45 font-medium">Architecture</p>
                 <div className="mt-4 flex flex-col gap-3 text-sm text-white/70">
-                  <a href="#overview" className="transition-colors duration-150 hover:text-white">
-                    Overview
+                  <a
+                    href="#overview"
+                    onClick={() => soundEngine.playClick()}
+                    className="transition-colors duration-150 hover:text-white"
+                  >
+                    01. Spatial Overview
                   </a>
-                  <a href="#experience" className="transition-colors duration-150 hover:text-white">
-                    Experience
+                  <a
+                    href="#experience"
+                    onClick={() => soundEngine.playClick()}
+                    className="transition-colors duration-150 hover:text-white"
+                  >
+                    02. Interactive Experience
                   </a>
-                  <a href="#architecture" className="transition-colors duration-150 hover:text-white">
-                    Architecture
+                  <a
+                    href="#architecture"
+                    onClick={() => soundEngine.playClick()}
+                    className="transition-colors duration-150 hover:text-white"
+                  >
+                    03. Core Engine
                   </a>
                 </div>
               </div>
 
               <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-5">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/45 font-medium">Contact</p>
+                <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-white/45 font-medium">Studio Dispatch</p>
                 <div className="mt-4 flex flex-col gap-3 text-sm text-white/70">
-                  <a href="mailto:sriyuthk122@gmail.com" className="transition-colors duration-150 hover:text-white">
-                    sriyuthk122@gmail.com
+                  <a
+                    href="mailto:hello@aetherone.design"
+                    onClick={() => soundEngine.playClick()}
+                    className="transition-colors duration-150 hover:text-white"
+                  >
+                    hello@aetherone.design
                   </a>
-                  <a href="mailto:pixelforgeuiux@gmail.com" className="transition-colors duration-150 hover:text-white">
-                    pixelforgeuiux@gmail.com
-                  </a>
-                  <span>Remote worldwide</span>
-                  <span className="text-white/50">Available for launch work</span>
+                  <span>San Francisco &amp; Remote Worldwide</span>
+                  <span className="text-white/50">Accepting select launch partners</span>
                 </div>
               </div>
             </div>
@@ -116,7 +103,7 @@ export function SplineSceneBasic() {
           <div className="mt-8 border-t border-white/10 pt-6">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/45 font-medium">Social</p>
+                <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-white/45 font-medium">Network</p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   {socialLinks.map((link) => (
                     <a
@@ -126,6 +113,7 @@ export function SplineSceneBasic() {
                       rel="noreferrer"
                       aria-label={link.label}
                       title={link.label}
+                      onClick={() => soundEngine.playClick()}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-150 hover:border-white/20 hover:bg-white/[0.08] hover:text-white active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
                     >
                       {link.icon}
@@ -134,26 +122,45 @@ export function SplineSceneBasic() {
                 </div>
               </div>
 
-              <a
-                href="#overview"
-                className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-150 hover:border-white/22 hover:bg-white/[0.1] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-              >
-                Back to top
-              </a>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    soundEngine.playClick()
+                    onOpenDemo?.()
+                  }}
+                  className="inline-flex items-center justify-center rounded-full border border-sky-400/40 bg-sky-500/20 px-5 py-2.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)] transition-all duration-150 hover:bg-sky-500/30 active:scale-[0.98]"
+                >
+                  Book demo
+                </button>
+
+                <a
+                  href="#overview"
+                  onClick={() => soundEngine.playClick()}
+                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-150 hover:border-white/22 hover:bg-white/[0.1] active:scale-[0.98]"
+                >
+                  Back to top ↑
+                </a>
+              </div>
             </div>
 
-            <p className="mt-6 text-sm text-white/45">
-              Aether One. Crafted for launches that need precision, atmosphere, and trust.
-            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/8 pt-6 text-xs text-white/40">
+              <p>© {new Date().getFullYear()} Aether One Studio Inc. All rights reserved.</p>
+              <div className="flex items-center gap-6">
+                <a href="#privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#terms" className="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#cookies" className="hover:text-white transition-colors">Cookie Architecture</a>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="relative min-h-[320px] flex-1 overflow-hidden lg:min-h-[580px]">
           <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_18%,rgba(125,211,252,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_24%,transparent_78%,rgba(2,6,23,0.16))]" />
           <div className="pointer-events-none absolute inset-x-5 top-5 z-10 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-          <div className="pointer-events-none absolute left-5 top-5 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[9px] uppercase tracking-[0.24em] text-white/50 backdrop-blur-sm">
+          <div className="pointer-events-none absolute left-5 top-5 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[9px] font-mono uppercase tracking-[0.24em] text-white/50 backdrop-blur-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
-            Live spline stage
+            Live Spline Stage // Viewport Optimized
           </div>
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
