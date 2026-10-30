@@ -8,9 +8,10 @@ export function SpatialPlayground() {
   const [fps, setFps] = useState(60)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const frameCountRef = useRef(0)
-  const lastTimeRef = useRef(performance.now())
+  const lastTimeRef = useRef(0)
 
   useEffect(() => {
+    lastTimeRef.current = performance.now()
     let animId
     const loop = (now) => {
       frameCountRef.current++
@@ -40,7 +41,7 @@ export function SpatialPlayground() {
   }
 
   return (
-    <section className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-32 lg:px-12">
+    <section id="workbench" className="relative mx-auto max-w-7xl px-6 py-24 sm:px-8 sm:py-32 lg:px-12">
       <div className="relative overflow-hidden rounded-[2.2rem] border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.01)),linear-gradient(145deg,rgba(5,9,22,0.95),rgba(2,4,14,0.98))] p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_30px_100px_rgba(0,0,0,0.6)] sm:p-10 lg:p-14">
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/40 to-transparent" />
 

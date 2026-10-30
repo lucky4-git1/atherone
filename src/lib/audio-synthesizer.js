@@ -35,8 +35,8 @@ export const soundEngine = {
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
       osc.type = "sine"
-      osc.frequency.setValueAtTime(1200, ctx.currentTime)
-      osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.04)
+      osc.frequency.setValueAtTime(1100, ctx.currentTime)
+      osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.04)
 
       gain.gain.setValueAtTime(0.04, ctx.currentTime)
       gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04)
@@ -60,17 +60,66 @@ export const soundEngine = {
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
       osc.type = "triangle"
-      osc.frequency.setValueAtTime(440, ctx.currentTime)
-      osc.frequency.linearRampToValueAtTime(660, ctx.currentTime + 0.03)
+      osc.frequency.setValueAtTime(420, ctx.currentTime)
+      osc.frequency.linearRampToValueAtTime(620, ctx.currentTime + 0.025)
 
-      gain.gain.setValueAtTime(0.015, ctx.currentTime)
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.03)
+      gain.gain.setValueAtTime(0.012, ctx.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.025)
 
       osc.connect(gain)
       gain.connect(ctx.destination)
 
       osc.start()
-      osc.stop(ctx.currentTime + 0.03)
+      osc.stop(ctx.currentTime + 0.025)
+    } catch {
+      // AudioContext policy handled
+    }
+  },
+
+  playModeSwitch() {
+    if (this.muted) return
+    const ctx = getAudioContext()
+    if (!ctx) return
+
+    try {
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = "sine"
+      osc.frequency.setValueAtTime(350, ctx.currentTime)
+      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.06)
+
+      gain.gain.setValueAtTime(0.03, ctx.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.06)
+
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+
+      osc.start()
+      osc.stop(ctx.currentTime + 0.06)
+    } catch {
+      // AudioContext policy handled
+    }
+  },
+
+  playTone(frequency = 440, duration = 0.1) {
+    if (this.muted) return
+    const ctx = getAudioContext()
+    if (!ctx) return
+
+    try {
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = "sine"
+      osc.frequency.setValueAtTime(frequency, ctx.currentTime)
+
+      gain.gain.setValueAtTime(0.035, ctx.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration)
+
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+
+      osc.start()
+      osc.stop(ctx.currentTime + duration)
     } catch {
       // AudioContext policy handled
     }
@@ -88,14 +137,14 @@ export const soundEngine = {
         osc.type = "sine"
         osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.06)
 
-        gain.gain.setValueAtTime(0.03, ctx.currentTime + i * 0.06)
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.06 + 0.4)
+        gain.gain.setValueAtTime(0.025, ctx.currentTime + i * 0.06)
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.06 + 0.35)
 
         osc.connect(gain)
         gain.connect(ctx.destination)
 
         osc.start(ctx.currentTime + i * 0.06)
-        osc.stop(ctx.currentTime + i * 0.06 + 0.45)
+        osc.stop(ctx.currentTime + i * 0.06 + 0.4)
       })
     } catch {
       // AudioContext policy handled

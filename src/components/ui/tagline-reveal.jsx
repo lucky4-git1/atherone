@@ -54,6 +54,7 @@ export function TaglineReveal() {
 
   return (
     <section
+      id="manifesto"
       ref={containerRef}
       className="relative mx-auto max-w-7xl px-6 py-28 sm:px-8 sm:py-36 lg:px-12"
       style={{ contain: "layout paint" }}

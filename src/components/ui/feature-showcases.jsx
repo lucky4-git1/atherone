@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { motion } from "framer-motion"
 import { soundEngine } from "@/lib/audio-synthesizer"
 
@@ -67,6 +67,10 @@ export function SignalShowcase() {
             (height, i) => (
               <motion.div
                 key={i}
+                onClick={() => {
+                  soundEngine.playTone(280 + i * 36, 0.14)
+                }}
+                title={`Frequency bin ${i + 1} (${280 + i * 36}Hz) - Click to audition`}
                 animate={
                   isPlaying
                     ? { height: [`${height * 0.4}%`, `${height}%`, `${height * 0.6}%`] }
@@ -77,7 +81,7 @@ export function SignalShowcase() {
                   duration: 0.8 + (i % 4) * 0.2,
                   ease: "easeInOut",
                 }}
-                className="w-full rounded-t-sm bg-gradient-to-t from-sky-500/30 to-sky-400/90"
+                className="w-full rounded-t-sm bg-gradient-to-t from-sky-500/30 to-sky-400/90 cursor-pointer hover:brightness-125 transition-all"
               />
             ),
           )}

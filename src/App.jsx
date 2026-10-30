@@ -103,6 +103,14 @@ export default function App() {
 
   return (
     <div className="relative overflow-x-clip bg-[#02050e] text-white selection:bg-sky-500/25 selection:text-white">
+      {/* Accessible skip link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-sky-400 focus:text-black focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:outline-none"
+      >
+        Skip to content
+      </a>
+
       {/* Fine-pointer trailing custom cursor */}
       <CustomCursor />
 
@@ -138,7 +146,7 @@ export default function App() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="relative"
       >
-        <main ref={mainRef} className="relative z-10 overflow-x-clip">
+        <main id="main-content" ref={mainRef} className="relative z-10 overflow-x-clip">
           {/* Spatial 3D Hero Section */}
           <HeroSection onOpenDemo={() => setIsDemoOpen(true)} />
 
