@@ -7,9 +7,9 @@ export function ShaderAnimation({ scrollYProgress }) {
   const progressRef = useRef(0)
   const rafRef = useRef(0)
   const springProgress = useSpring(scrollYProgress, {
-    damping: 22,
-    stiffness: 120,
-    mass: 0.18,
+    damping: 24,
+    stiffness: 140,
+    mass: 0.15,
   })
 
   useMotionValueEvent(springProgress, "change", (latest) => {
@@ -18,9 +18,7 @@ export function ShaderAnimation({ scrollYProgress }) {
 
   useEffect(() => {
     const container = containerRef.current
-    if (!container) {
-      return undefined
-    }
+    if (!container) return undefined
 
     const vertexShader = `
       void main() {
@@ -29,7 +27,7 @@ export function ShaderAnimation({ scrollYProgress }) {
     `
 
     const fragmentShader = `
-      precision highp float;
+      precision mediump float;
 
       uniform vec2 resolution;
       uniform float time;
@@ -57,17 +55,17 @@ export function ShaderAnimation({ scrollYProgress }) {
         warped.x += sin(uv.y * 2.4 + t * 0.9) * 0.07;
         warped.y += cos(uv.x * 2.0 - t * 0.7) * 0.06;
 
-        float field = noise(warped * 2.4 + vec2(t * 0.28, -t * 0.18));
-        float nebula = smoothstep(0.28, 0.92, noise(warped * 1.55 - vec2(t * 0.14, t * 0.1)));
-        float haze = smoothstep(0.22, 0.88, noise((warped + vec2(1.7, -2.4)) * 1.15 + vec2(-t * 0.08, t * 0.05)));
+        float field = noise(warped * 2.2 + vec2(t * 0.25, -t * 0.16));
+        float nebula = smoothstep(0.28, 0.92, noise(warped * 1.5 - vec2(t * 0.12, t * 0.09)));
+        float haze = smoothstep(0.24, 0.88, noise((warped + vec2(1.5, -2.0)) * 1.1 + vec2(-t * 0.07, t * 0.04)));
         float band = smoothstep(0.0, 1.0, 1.0 - abs(warped.y + sin(warped.x * 1.8 + t * 0.55) * 0.28));
-        float drift = sin(uv.y * 5.0 + t * 2.0) * 0.03 + cos(uv.x * 4.0 - t * 1.6) * 0.02;
-        vec3 base = mix(vec3(0.008, 0.014, 0.04), vec3(0.018, 0.04, 0.09), field);
+        
+        vec3 base = mix(vec3(0.006, 0.012, 0.035), vec3(0.015, 0.035, 0.08), field);
         vec3 auroraA = vec3(0.14, 0.38, 0.82) * (0.18 + intensity * 0.18) * nebula;
         vec3 auroraB = vec3(0.34, 0.16, 0.72) * (0.12 + intensity * 0.12) * haze;
         vec3 mist = vec3(0.12, 0.28, 0.58) * band * 0.08;
-        vec3 vignette = vec3(1.0 - smoothstep(0.2, 1.25, length(uv + drift)));
-        vec3 color = base + auroraA + auroraB + mist + vignette * 0.04;
+        float vig = 1.0 - smoothstep(0.3, 1.35, length(uv));
+        vec3 color = base + auroraA + auroraB + mist + vec3(vig * 0.03);
 
         gl_FragColor = vec4(color, 1.0);
       }
@@ -88,46 +86,77 @@ export function ShaderAnimation({ scrollYProgress }) {
       uniforms,
       vertexShader,
       fragmentShader,
+      depthTest: false,
+      depthWrite: false,
     })
 
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
 
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: false,
       alpha: false,
       powerPreference: "high-performance",
+      stencil: false,
+      depth: false,
     })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8))
+    // Cap pixel ratio to 1.0 for massive GPU performance savings with imperceptible visual difference
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.0))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.domElement.style.pointerEvents = "none"
+    renderer.domElement.style.width = "100%"
+    renderer.domElement.style.height = "100%"
     container.appendChild(renderer.domElement)
 
+    let resizeTimer = null
     const onResize = () => {
-      const width = window.innerWidth
-      const height = window.innerHeight
-      renderer.setSize(width, height, false)
-      uniforms.resolution.value.set(width, height)
+      if (resizeTimer) clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        const width = window.innerWidth
+        const height = window.innerHeight
+        renderer.setSize(width, height, false)
+        uniforms.resolution.value.set(width, height)
+      }, 80)
     }
 
-    onResize()
+    const width = window.innerWidth
+    const height = window.innerHeight
+    renderer.setSize(width, height, false)
+    uniforms.resolution.value.set(width, height)
+
     window.addEventListener("resize", onResize)
 
-    let baseTime = 0
+    let isVisible = true
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange)
 
-    const animate = () => {
+    let baseTime = 0
+    let lastRenderTime = performance.now()
+
+    const animate = (currentTime) => {
+      rafRef.current = window.requestAnimationFrame(animate)
+      if (!isVisible) return
+
+      const delta = Math.min((currentTime - lastRenderTime) / 1000, 0.1)
+      lastRenderTime = currentTime
+
       const progress = progressRef.current
-      baseTime += 0.018 + progress * 0.018
+      baseTime += (0.018 + progress * 0.02) * (delta * 60)
       uniforms.time.value = baseTime
       uniforms.intensity.value = 0.16 + progress * 0.5
       renderer.render(scene, camera)
-      rafRef.current = window.requestAnimationFrame(animate)
     }
 
-    animate()
+    rafRef.current = window.requestAnimationFrame(animate)
 
     return () => {
-      window.cancelAnimationFrame(rafRef.current)
+      if (rafRef.current) {
+        window.cancelAnimationFrame(rafRef.current)
+      }
+      if (resizeTimer) clearTimeout(resizeTimer)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
       window.removeEventListener("resize", onResize)
       geometry.dispose()
       material.dispose()
@@ -136,7 +165,12 @@ export function ShaderAnimation({ scrollYProgress }) {
         container.removeChild(renderer.domElement)
       }
     }
-  }, [springProgress])
+  }, [])
 
-  return <div ref={containerRef} className="pointer-events-none fixed inset-0 z-0 h-screen w-screen bg-black" />
+  return (
+    <div
+      ref={containerRef}
+      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen bg-black"
+    />
+  )
 }

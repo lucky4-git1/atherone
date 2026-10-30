@@ -3,14 +3,37 @@
 :root {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: rgba(255, 255, 255, 0.96);
-  background:
-    radial-gradient(circle at top, rgba(59, 130, 246, 0.1), transparent 30%),
-    linear-gradient(180deg, #020617 0%, #020617 40%, #000000 100%);
+  background-color: #020617;
   color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  caret-color: #38bdf8;
+}
+
+::selection {
+  background-color: rgba(56, 189, 248, 0.3);
+  color: #ffffff;
+}
+
+/* Custom themed scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
 }
 
 html {
@@ -24,10 +47,8 @@ body {
   min-width: 320px;
   overflow-x: clip;
   background:
-    radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 24%),
-    radial-gradient(circle at 20% 18%, rgba(168, 85, 247, 0.1), transparent 22%),
-    radial-gradient(circle at 80% 30%, rgba(59, 130, 246, 0.1), transparent 28%),
-    linear-gradient(180deg, rgba(2, 6, 23, 0.92) 0%, rgba(0, 0, 0, 1) 100%);
+    radial-gradient(circle at top, rgba(96, 165, 250, 0.15) 0%, transparent 35%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.95) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
 body::before {
@@ -36,11 +57,12 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 120px 120px;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 82%);
-  opacity: 0.12;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+  opacity: 0.1;
+  z-index: 0;
 }
 
 body::after {
@@ -49,12 +71,11 @@ body::after {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.07), transparent 14%),
-    radial-gradient(circle at 18% 68%, rgba(56, 189, 248, 0.1), transparent 18%),
-    radial-gradient(circle at 82% 40%, rgba(147, 51, 234, 0.11), transparent 20%),
-    radial-gradient(circle at 50% 85%, rgba(59, 130, 246, 0.08), transparent 20%);
-  filter: blur(52px);
-  opacity: 0.84;
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.04) 0%, transparent 35%),
+    radial-gradient(circle at 18% 68%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 82% 40%, rgba(147, 51, 234, 0.06) 0%, transparent 40%);
+  opacity: 0.8;
+  z-index: 0;
 }
 
 a {
@@ -83,128 +104,44 @@ a {
 }
 
 .hero-spline-stage,
-.hero-spline-stage * ,
+.hero-spline-stage *,
 .footer-spline-stage,
 .footer-spline-stage * {
   pointer-events: auto;
 }
 
 .loader {
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.14);
-  border-top-color: rgba(255, 255, 255, 0.78);
-  animation: spin 0.9s linear infinite;
-}
-
-.liquid-glass {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.02)),
-    linear-gradient(135deg, rgba(125, 211, 252, 0.08), rgba(167, 139, 250, 0.03) 45%, rgba(15, 23, 42, 0.2));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 -18px 40px rgba(15, 23, 42, 0.14),
-    0 30px 80px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(24px) saturate(145%);
-  -webkit-backdrop-filter: blur(24px) saturate(145%);
-}
-
-.liquid-glass::before {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), transparent 32%),
-    linear-gradient(115deg, rgba(255, 255, 255, 0.16), transparent 30%, transparent 68%, rgba(255, 255, 255, 0.06));
-  opacity: 0.9;
-}
-
-.liquid-glass::after {
-  content: "";
-  position: absolute;
-  inset: auto 12% -34% 12%;
-  height: 52%;
-  border-radius: 999px;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.18), rgba(96, 165, 250, 0));
-  filter: blur(38px);
-}
-
-.liquid-glass-soft {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
-    rgba(10, 14, 24, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.11),
-    0 18px 40px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(20px) saturate(135%);
-  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(56, 189, 248, 0.85);
+  animation: spin 0.8s linear infinite;
 }
 
 .ambient-noise {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.12;
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0.5px, transparent 0.5px),
-    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08) 0.6px, transparent 0.6px),
-    radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.06) 0.5px, transparent 0.5px);
-  background-size: 180px 180px, 220px 220px, 260px 260px;
-  mix-blend-mode: screen;
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08) 0.5px, transparent 0.5px),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.06) 0.6px, transparent 0.6px);
+  background-size: 160px 160px, 200px 200px;
 }
 
 .cyber-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(circle at center, black 38%, transparent 90%);
-}
-
-.cyber-scanline {
-  background:
-    linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(96, 165, 250, 0.12) 48%,
-      rgba(255, 255, 255, 0.03) 50%,
-      transparent 56%
-    );
-  animation: cyber-scan 4.5s linear infinite;
-}
-
-.cyber-noise {
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12) 0.5px, transparent 0.5px),
-    radial-gradient(circle at 70% 35%, rgba(255, 255, 255, 0.08) 0.5px, transparent 0.5px),
-    radial-gradient(circle at 45% 75%, rgba(255, 255, 255, 0.08) 0.6px, transparent 0.6px);
-  background-size: 140px 140px, 180px 180px, 220px 220px;
-}
-
-.cyber-shards {
-  background-image:
-    linear-gradient(115deg, transparent 0 47%, rgba(96, 165, 250, 0.12) 49%, transparent 52%),
-    linear-gradient(70deg, transparent 0 44%, rgba(192, 132, 252, 0.1) 46%, transparent 49%),
-    linear-gradient(145deg, transparent 0 70%, rgba(255, 255, 255, 0.06) 72%, transparent 74%);
-  background-size: 480px 480px, 560px 560px, 680px 680px;
-  animation: cyber-drift 12s linear infinite;
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
 }
 
 .cyber-glitch {
   position: relative;
   text-shadow:
-    0 0 18px rgba(96, 165, 250, 0.18),
-    0 0 40px rgba(96, 165, 250, 0.08);
+    0 0 16px rgba(96, 165, 250, 0.18),
+    0 0 32px rgba(96, 165, 250, 0.08);
 }
 
 .cyber-glitch::before,
@@ -213,27 +150,25 @@ a {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
 .cyber-glitch::before {
-  color: rgba(56, 189, 248, 0.9);
+  color: rgba(56, 189, 248, 0.85);
   transform: translate3d(-1px, 0, 0);
-  clip-path: inset(18% 0 56% 0);
-  animation: cyber-glitch 2.4s infinite ease-in-out alternate-reverse;
+  clip-path: inset(20% 0 54% 0);
 }
 
 .cyber-glitch::after {
-  color: rgba(192, 132, 252, 0.85);
+  color: rgba(192, 132, 252, 0.8);
   transform: translate3d(1px, 0, 0);
-  clip-path: inset(62% 0 12% 0);
-  animation: cyber-glitch 1.8s infinite ease-in-out alternate;
+  clip-path: inset(58% 0 16% 0);
 }
 
 @keyframes spotlight {
   0% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) scale(0.92);
+    transform: translate3d(0, 0, 0) scale(0.95);
   }
   100% {
     opacity: 1;
@@ -242,47 +177,7 @@ a {
 }
 
 .animate-spotlight {
-  animation: spotlight 1.8s ease forwards;
-}
-
-@keyframes cyber-scan {
-  0% {
-    transform: translate3d(0, -100%, 0);
-  }
-  100% {
-    transform: translate3d(0, 100%, 0);
-  }
-}
-
-@keyframes cyber-glitch {
-  0% {
-    transform: translate3d(-1px, 0, 0);
-    opacity: 0.18;
-  }
-  25% {
-    transform: translate3d(2px, -1px, 0);
-    opacity: 0.34;
-  }
-  50% {
-    transform: translate3d(-2px, 1px, 0);
-    opacity: 0.22;
-  }
-  100% {
-    transform: translate3d(1px, 0, 0);
-    opacity: 0.3;
-  }
-}
-
-@keyframes cyber-drift {
-  0% {
-    transform: translate3d(-1%, -1%, 0);
-  }
-  50% {
-    transform: translate3d(1%, 1%, 0);
-  }
-  100% {
-    transform: translate3d(-1%, -1%, 0);
-  }
+  animation: spotlight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes spin {

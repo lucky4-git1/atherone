@@ -22,7 +22,7 @@ const featureSections = [
     title: "A product story paced like cinema.",
     description:
       "Each section lands with intent. Perspective, scale, and motion make the interface feel spatial without losing clarity or restraint.",
-    accent: "from-sky-400/50 via-cyan-300/10 to-transparent",
+    accent: "from-sky-500/25 to-transparent",
     align: "left",
     metrics: ["Perspective-led framing", "Measured reveal timing", "Minimal visual noise"],
   },
@@ -32,7 +32,7 @@ const featureSections = [
     title: "Designed to keep attention exactly where it matters.",
     description:
       "The narrative advances section by section. Copy and visuals move together so the product remains the hero throughout the scroll.",
-    accent: "from-indigo-400/45 via-violet-300/10 to-transparent",
+    accent: "from-blue-500/25 to-transparent",
     align: "right",
     metrics: ["Progressive content reveal", "Motion as hierarchy", "Clean visual pacing"],
   },
@@ -42,7 +42,7 @@ const featureSections = [
     title: "Atmosphere in the background. Clarity in the foreground.",
     description:
       "The shader stays fullscreen and alive underneath everything, adding energy while the UI layers glide through it with subtle parallax.",
-    accent: "from-fuchsia-400/35 via-blue-300/10 to-transparent",
+    accent: "from-slate-400/20 to-transparent",
     align: "left",
     metrics: ["Fixed immersive shader", "Controlled depth illusion", "60fps-first composition"],
   },
@@ -52,7 +52,7 @@ const featureSections = [
     title: "Built to present serious software with confidence.",
     description:
       "The architecture stays modular, so the page can evolve from campaign site to flagship product reveal without turning into a monolith.",
-    accent: "from-blue-400/45 via-slate-300/10 to-transparent",
+    accent: "from-sky-400/20 to-transparent",
     align: "right",
     metrics: ["Reusable section engine", "Client-grade modularity", "Performance-conscious motion"],
   },
@@ -66,19 +66,22 @@ export default function App() {
     target: mainRef,
     offset: ["start start", "end end"],
   })
-  const isScrolled = useNavbarState(scrollY, 56)
+  const isScrolled = useNavbarState(scrollY, 48)
 
   useEffect(() => {
-    const duration = 2800
+    // Fast, responsive 800ms boot sequence for instant gratification without lag
+    const duration = 850
     const start = window.performance.now()
     let frameId = 0
 
     const tick = (now) => {
       const elapsed = now - start
-      const progress = Math.min(elapsed / duration, 1)
+      const rawProgress = Math.min(elapsed / duration, 1)
+      // Ease out cubic
+      const progress = 1 - Math.pow(1 - rawProgress, 3)
       setLoadingProgress(Math.round(progress * 100))
 
-      if (progress < 1) {
+      if (rawProgress < 1) {
         frameId = window.requestAnimationFrame(tick)
       } else {
         setIsLoading(false)
@@ -93,34 +96,42 @@ export default function App() {
   }, [])
 
   return (
-    <div className="overflow-x-clip bg-neutral-950 text-white">
+    <div className="overflow-x-clip bg-neutral-950 text-white selection:bg-sky-500/30 selection:text-white">
       <AnimatePresence>
         {isLoading ? <LoadingScreen key="loading-screen" progress={loadingProgress} /> : null}
       </AnimatePresence>
+
       <Suspense fallback={<div className="fixed inset-0 z-0 bg-black" />}>
         <ShaderAnimation scrollYProgress={scrollYProgress} />
       </Suspense>
+
       <div className="pointer-events-none fixed inset-0 z-[1]">
-        <WavesOverlay className="opacity-45" />
-        <div className="ambient-noise" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_28%,rgba(2,6,23,0.34)_78%,rgba(2,6,23,0.72))]" />
+        <WavesOverlay className="opacity-40" />
+        <div className="ambient-noise opacity-10" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_32%,rgba(2,6,23,0.3)_75%,rgba(2,6,23,0.65))]" />
       </div>
+
       <Navbar isScrolled={isScrolled} />
+
       <motion.div
         initial={false}
         animate={{
-          opacity: isLoading ? 0.26 : 1,
-          scale: isLoading ? 0.987 : 1,
-          filter: isLoading ? "blur(14px)" : "blur(0px)",
+          opacity: isLoading ? 0.35 : 1,
+          scale: isLoading ? 0.99 : 1,
         }}
-        transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="relative"
       >
         <main ref={mainRef} className="relative z-10 overflow-x-clip">
           <HeroSection />
 
           {featureSections.map((section, index) => (
-            <FeatureSection key={section.id} index={index} total={featureSections.length} {...section} />
+            <FeatureSection
+              key={section.id}
+              index={index}
+              total={featureSections.length}
+              {...section}
+            />
           ))}
 
           <CTASection scrollYProgress={scrollYProgress} />

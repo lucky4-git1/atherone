@@ -61,21 +61,19 @@ const socialLinks = [
 
 export function SplineSceneBasic() {
   return (
-    <Card className="relative min-h-[540px] w-full overflow-hidden rounded-[2rem] border-white/10 bg-black/[0.96] shadow-[0_30px_120px_rgba(0,0,0,0.42)] lg:min-h-[580px]">
-      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_20%),radial-gradient(circle_at_30%_40%,rgba(96,165,250,0.08),transparent_24%)]" />
+    <Card className="relative min-h-[540px] w-full overflow-hidden rounded-[2rem] border-white/12 bg-neutral-950/95 shadow-[0_30px_100px_rgba(0,0,0,0.5)] lg:min-h-[580px]">
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="rgba(255,255,255,0.14)" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.06),transparent_20%),radial-gradient(circle_at_30%_40%,rgba(96,165,250,0.06),transparent_24%)]" />
 
       <div className="flex h-full flex-col lg:flex-row">
         <div className="relative z-10 flex flex-1 flex-col justify-between border-b border-white/10 p-7 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
           <div>
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-white/80" />
-              <span className="text-[11px] uppercase tracking-[0.32em] text-white/52">
-                Closing frame
-              </span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1 text-[11px] font-medium tracking-[0.24em] text-white/60">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+              <span>Closing frame</span>
             </div>
 
-            <h2 className="mt-7 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-transparent md:text-[2.8rem] xl:text-5xl">
+            <h2 className="mt-7 text-4xl font-semibold leading-[0.98] tracking-[-0.05em] text-white md:text-[2.8rem] xl:text-5xl">
               Built to leave a premium final impression.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-neutral-300">
@@ -84,32 +82,32 @@ export function SplineSceneBasic() {
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-5">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/44">Explore</p>
-                <div className="mt-4 flex flex-col gap-3 text-sm text-white/68">
-                  <a href="#overview" className="transition-colors duration-300 hover:text-white">
+              <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-5">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-white/45 font-medium">Explore</p>
+                <div className="mt-4 flex flex-col gap-3 text-sm text-white/70">
+                  <a href="#overview" className="transition-colors duration-150 hover:text-white">
                     Overview
                   </a>
-                  <a href="#experience" className="transition-colors duration-300 hover:text-white">
+                  <a href="#experience" className="transition-colors duration-150 hover:text-white">
                     Experience
                   </a>
-                  <a href="#architecture" className="transition-colors duration-300 hover:text-white">
+                  <a href="#architecture" className="transition-colors duration-150 hover:text-white">
                     Architecture
                   </a>
                 </div>
               </div>
 
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-5">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/44">Contact</p>
-                <div className="mt-4 flex flex-col gap-3 text-sm text-white/68">
-                  <a href="mailto:sriyuthk122@gmail.com" className="transition-colors duration-300 hover:text-white">
+              <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-5">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-white/45 font-medium">Contact</p>
+                <div className="mt-4 flex flex-col gap-3 text-sm text-white/70">
+                  <a href="mailto:sriyuthk122@gmail.com" className="transition-colors duration-150 hover:text-white">
                     sriyuthk122@gmail.com
                   </a>
-                  <a href="mailto:pixelforgeuiux@gmail.com" className="transition-colors duration-300 hover:text-white">
+                  <a href="mailto:pixelforgeuiux@gmail.com" className="transition-colors duration-150 hover:text-white">
                     pixelforgeuiux@gmail.com
                   </a>
                   <span>Remote worldwide</span>
-                  <span>Available for launch work</span>
+                  <span className="text-white/50">Available for launch work</span>
                 </div>
               </div>
             </div>
@@ -118,7 +116,7 @@ export function SplineSceneBasic() {
           <div className="mt-8 border-t border-white/10 pt-6">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/42">Social</p>
+                <p className="text-[11px] uppercase tracking-[0.28em] text-white/45 font-medium">Social</p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   {socialLinks.map((link) => (
                     <a
@@ -128,7 +126,7 @@ export function SplineSceneBasic() {
                       rel="noreferrer"
                       aria-label={link.label}
                       title={link.label}
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/68 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-150 hover:border-white/20 hover:bg-white/[0.08] hover:text-white active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
                     >
                       {link.icon}
                     </a>
@@ -138,23 +136,23 @@ export function SplineSceneBasic() {
 
               <a
                 href="#overview"
-                className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.06] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:border-white/20 hover:bg-white/[0.1]"
+                className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-150 hover:border-white/22 hover:bg-white/[0.1] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
               >
                 Back to top
               </a>
             </div>
 
-            <p className="mt-6 text-sm text-white/42">
+            <p className="mt-6 text-sm text-white/45">
               Aether One. Crafted for launches that need precision, atmosphere, and trust.
             </p>
           </div>
         </div>
 
         <div className="relative min-h-[320px] flex-1 overflow-hidden lg:min-h-[580px]">
-          <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_18%,rgba(125,211,252,0.14),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_24%,transparent_78%,rgba(2,6,23,0.16))]" />
+          <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_18%,rgba(125,211,252,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_24%,transparent_78%,rgba(2,6,23,0.16))]" />
           <div className="pointer-events-none absolute inset-x-5 top-5 z-10 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-          <div className="pointer-events-none absolute left-5 top-5 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[9px] uppercase tracking-[0.24em] text-white/42 backdrop-blur-sm">
-            <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.95)]" />
+          <div className="pointer-events-none absolute left-5 top-5 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[9px] uppercase tracking-[0.24em] text-white/50 backdrop-blur-sm">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
             Live spline stage
           </div>
           <SplineScene
