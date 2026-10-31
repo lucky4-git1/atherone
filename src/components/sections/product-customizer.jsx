@@ -1,7 +1,7 @@
-import { motion } from "framer-motion"
 import { useBag } from "@/context/bag-context"
 import { PRODUCT_DATA } from "@/data/product-data"
 import { soundEngine } from "@/lib/audio-synthesizer"
+import { ThreeHeadphoneViewer } from "@/components/ui/three-headphone-viewer"
 
 export function ProductCustomizer() {
   const {
@@ -46,47 +46,25 @@ export function ProductCustomizer() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Finish & Headphone Visualizer Card */}
-          <div className="rounded-2xl border border-white/10 bg-black/60 p-8 flex flex-col justify-between h-[28rem] relative overflow-hidden">
-            <div className="flex items-center justify-between text-xs font-mono text-white/50 border-b border-white/8 pb-3">
-              <span>ANODIZED COATING: {selectedFinish.name.toUpperCase()}</span>
-              <span className="text-sky-400">{selectedFinish.badge}</span>
+          {/* Live 3D Headphone Customizer Stage */}
+          <div className="rounded-2xl border border-white/10 bg-black/60 p-6 flex flex-col justify-between h-[30rem] sm:h-[34rem] relative overflow-hidden">
+            <div className="flex items-center justify-between text-xs font-mono text-white/50 border-b border-white/8 pb-3 z-10">
+              <span>ALLOY SPECIFICATION: {selectedFinish.name.toUpperCase()}</span>
+              <span className="text-sky-400 font-semibold">{selectedFinish.badge}</span>
             </div>
 
-            {/* Stylized Visual Representation */}
-            <div className="my-auto flex flex-col items-center justify-center">
-              <motion.div
-                key={selectedFinish.id}
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="relative flex items-center justify-center"
-              >
-                {/* Simulated chassis ring */}
-                <div
-                  style={{
-                    backgroundColor: selectedFinish.hex,
-                    boxShadow: `0 20px 60px ${selectedFinish.hex}44`,
-                  }}
-                  className="w-48 h-48 sm:w-56 sm:h-56 rounded-full border-4 border-white/20 flex flex-col items-center justify-center relative shadow-2xl transition-all duration-300"
-                >
-                  <div className="w-36 h-36 rounded-full border border-white/15 bg-black/50 flex flex-col items-center justify-center p-3 text-center">
-                    <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">
-                      {selectedFinish.badge}
-                    </span>
-                    <span className="text-sm font-bold text-white mt-1">
-                      {selectedFinish.name}
-                    </span>
-                    <span className="text-xs font-mono text-sky-400 mt-1">
-                      ${selectedEdition.price} USD
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
+            {/* Live 3D Three.js Model with Selected PBR Finish */}
+            <div className="relative flex-1 w-full h-full min-h-0">
+              <ThreeHeadphoneViewer
+                selectedFinishId={selectedFinish.id}
+                isExploded={false}
+                isRotating={true}
+              />
             </div>
 
-            <div className="text-xs font-mono text-white/40 text-center border-t border-white/8 pt-3">
-              {selectedFinish.description}
+            <div className="z-10 text-xs font-mono text-white/40 text-center border-t border-white/8 pt-3 flex items-center justify-between">
+              <span>{selectedFinish.description}</span>
+              <span className="text-sky-400 font-medium">${selectedEdition.price} USD</span>
             </div>
           </div>
 
