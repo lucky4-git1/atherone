@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { soundEngine } from "@/lib/audio-synthesizer"
-import { useBag } from "@/context/bag-context"
 
 const NAV_LINKS = [
-  { label: "Acoustics", href: "#philosophy" },
-  { label: "3D Inspector", href: "#inspector" },
-  { label: "Audition Lab", href: "#audition" },
-  { label: "Customizer", href: "#configure" },
+  { label: "Idea", href: "#idea" },
+  { label: "The Machine", href: "#machine" },
+  { label: "Details", href: "#details" },
+  { label: "Movement", href: "#movement" },
+  { label: "Intelligence", href: "#intelligence" },
+  { label: "Experience", href: "#experience" },
   { label: "Specs", href: "#specifications" },
 ]
 
@@ -15,11 +16,20 @@ export function Navbar({ isScrolled, onOpenDemo }) {
   const [activeSection, setActiveSection] = useState("overview")
   const [isAudioActive, setIsAudioActive] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { totalItemCount, setIsBagOpen } = useBag()
 
   // Track active section via IntersectionObserver
   useEffect(() => {
-    const sectionIds = ["overview", "philosophy", "inspector", "anatomy", "audition", "configure", "specifications", "support"]
+    const sectionIds = [
+      "overview",
+      "idea",
+      "machine",
+      "details",
+      "movement",
+      "intelligence",
+      "experience",
+      "specifications",
+      "credits",
+    ]
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -64,21 +74,16 @@ export function Navbar({ isScrolled, onOpenDemo }) {
     setIsMobileMenuOpen(false)
   }
 
-  const handleBagClick = () => {
-    soundEngine.playClick()
-    setIsBagOpen(true)
-  }
-
   return (
     <header className="fixed inset-x-0 top-0 z-40 transition-all duration-300">
       <motion.div
         initial={false}
         animate={{
-          backgroundColor: isScrolled ? "rgba(4, 8, 20, 0.92)" : "rgba(8, 12, 28, 0.65)",
-          borderColor: isScrolled ? "rgba(255, 255, 255, 0.12)" : "rgba(255, 255, 255, 0.08)",
+          backgroundColor: isScrolled ? "rgba(3, 7, 18, 0.94)" : "rgba(8, 12, 28, 0.72)",
+          borderColor: isScrolled ? "rgba(255, 255, 255, 0.14)" : "rgba(255, 255, 255, 0.08)",
           boxShadow: isScrolled
-            ? "0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-            : "0 10px 30px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
+            ? "0 20px 40px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+            : "0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
         }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         className="mx-auto mt-3 flex h-14 w-[calc(100%-1.5rem)] max-w-6xl items-center justify-between rounded-full border px-4 backdrop-blur-xl sm:mt-4 sm:h-16 sm:px-6 lg:px-8"
@@ -90,16 +95,19 @@ export function Navbar({ isScrolled, onOpenDemo }) {
           onClick={() => soundEngine.playClick()}
         >
           <div className="relative flex h-3 w-3 items-center justify-center">
-            <span className="absolute h-full w-full rounded-full bg-sky-400 opacity-75 animate-ping" />
-            <span className="relative h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,1)]" />
+            <span className="absolute h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+            <span className="relative h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]" />
           </div>
-          <span className="text-xs font-semibold uppercase tracking-[0.26em] text-white transition-colors group-hover:text-sky-300">
-            Aether One
+          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white transition-colors group-hover:text-emerald-400">
+            Atherone
+          </span>
+          <span className="hidden sm:inline-block rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[8px] font-mono uppercase tracking-widest text-white/50">
+            Study
           </span>
         </a>
 
         {/* Curated Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2 rounded-full border border-white/6 bg-white/[0.02] p-1">
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1.5 rounded-full border border-white/6 bg-white/[0.02] p-1">
           {NAV_LINKS.map((item) => {
             const isActive = activeSection === item.href.replace("#", "")
             return (
@@ -108,7 +116,7 @@ export function Navbar({ isScrolled, onOpenDemo }) {
                 href={item.href}
                 onClick={() => soundEngine.playClick()}
                 onMouseEnter={() => soundEngine.playHover()}
-                className={`relative px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider rounded-full transition-colors duration-150 ${
+                className={`relative px-3 py-1.5 text-xs font-mono uppercase tracking-wider rounded-full transition-colors duration-150 ${
                   isActive ? "text-white font-semibold" : "text-white/60 hover:text-white"
                 }`}
               >
@@ -136,17 +144,17 @@ export function Navbar({ isScrolled, onOpenDemo }) {
           >
             <span className="flex items-center gap-0.5 h-3">
               <span
-                className={`w-0.5 rounded-full bg-sky-400 transition-[height,opacity] duration-150 ${
+                className={`w-0.5 rounded-full bg-emerald-400 transition-[height,opacity] duration-150 ${
                   isAudioActive ? "h-3 animate-pulse" : "h-1 opacity-40"
                 }`}
               />
               <span
-                className={`w-0.5 rounded-full bg-sky-400 transition-[height,opacity] duration-150 ${
+                className={`w-0.5 rounded-full bg-emerald-400 transition-[height,opacity] duration-150 ${
                   isAudioActive ? "h-2 animate-pulse" : "h-1 opacity-40"
                 }`}
               />
               <span
-                className={`w-0.5 rounded-full bg-sky-400 transition-[height,opacity] duration-150 ${
+                className={`w-0.5 rounded-full bg-emerald-400 transition-[height,opacity] duration-150 ${
                   isAudioActive ? "h-3.5 animate-pulse" : "h-1 opacity-40"
                 }`}
               />
@@ -156,35 +164,17 @@ export function Navbar({ isScrolled, onOpenDemo }) {
             </span>
           </button>
 
-          {/* Shopping Bag Drawer Trigger */}
-          <button
-            type="button"
-            onClick={handleBagClick}
-            className="relative flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3 py-1.5 text-xs font-mono uppercase text-white hover:border-sky-400/50 hover:bg-white/[0.12] transition-colors duration-150 active:scale-95"
-            aria-label={`Open shopping bag (${totalItemCount} items)`}
-          >
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-none stroke-current stroke-2">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" />
-            </svg>
-            <span className="hidden sm:inline">Bag</span>
-            {totalItemCount > 0 ? (
-              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-sky-400 font-mono text-[9px] font-bold text-black shadow-[0_0_8px_rgba(56,189,248,0.9)]">
-                {totalItemCount}
-              </span>
-            ) : null}
-          </button>
-
-          {/* Primary Action Button */}
+          {/* Primary Action Button: Studio Test Ride Inquire */}
           <button
             type="button"
             onClick={() => {
               soundEngine.playClick()
               onOpenDemo?.()
             }}
-            className="group hidden sm:flex items-center gap-1.5 rounded-full border border-sky-400/50 bg-sky-500/20 px-3.5 py-1.5 text-xs font-semibold text-white shadow-[0_0_15px_rgba(56,189,248,0.2)] hover:bg-sky-500/30 transition-colors duration-150 active:scale-95"
+            className="group hidden sm:flex items-center gap-1.5 rounded-full border border-emerald-500/50 bg-emerald-500/20 px-3.5 py-1.5 text-xs font-semibold text-white shadow-[0_0_15px_rgba(52,211,153,0.2)] hover:bg-emerald-500/30 transition-colors duration-150 active:scale-95"
           >
             <span>Inquire</span>
-            <span className="text-[9px] font-mono text-sky-300 opacity-70">⌘K</span>
+            <span className="text-[9px] font-mono text-emerald-300 opacity-70">⌘K</span>
           </button>
 
           {/* Mobile Hamburger Toggle */}
@@ -225,13 +215,13 @@ export function Navbar({ isScrolled, onOpenDemo }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col justify-between bg-[#02050e]/98 backdrop-blur-2xl p-6 sm:p-8 md:hidden"
+            className="fixed inset-0 z-50 flex flex-col justify-between bg-[#030712]/98 backdrop-blur-2xl p-6 sm:p-8 md:hidden"
           >
             <div className="flex items-center justify-between border-b border-white/10 pb-5">
               <div className="flex items-center gap-2.5">
-                <span className="h-2 w-2 rounded-full bg-sky-400" />
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
                 <span className="text-xs font-semibold uppercase tracking-[0.24em] text-white">
-                  Aether One Navigation
+                  Atherone Chapters
                 </span>
               </div>
               <button
@@ -257,7 +247,7 @@ export function Navbar({ isScrolled, onOpenDemo }) {
                   className="text-xl font-semibold tracking-tight text-white/80 hover:text-white hover:translate-x-2 transition-transform duration-150 flex items-center justify-between"
                 >
                   <span>{item.label}</span>
-                  <span className="text-xs font-mono text-white/30">0{index + 1}</span>
+                  <span className="text-xs font-mono text-emerald-400/60">0{index + 1}</span>
                 </motion.a>
               ))}
             </nav>
@@ -267,20 +257,9 @@ export function Navbar({ isScrolled, onOpenDemo }) {
                 type="button"
                 onClick={() => {
                   setIsMobileMenuOpen(false)
-                  handleBagClick()
-                }}
-                className="w-full rounded-full border border-sky-400/50 bg-sky-500/20 py-3 text-center text-sm font-semibold text-white shadow-[0_4px_16px_rgba(56,189,248,0.25)]"
-              >
-                Open Shopping Bag ({totalItemCount})
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setIsMobileMenuOpen(false)
                   onOpenDemo?.()
                 }}
-                className="w-full rounded-full border border-white/15 bg-white/[0.05] py-3 text-center text-xs font-mono uppercase tracking-wider text-white"
+                className="w-full rounded-full border border-emerald-500/50 bg-emerald-500/20 py-3 text-center text-sm font-semibold text-white shadow-[0_4px_16px_rgba(52,211,153,0.25)]"
               >
                 Inquire Studio Demo (⌘K)
               </button>

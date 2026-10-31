@@ -1,28 +1,25 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useScroll } from "framer-motion"
-import { BagProvider } from "./context/bag-context"
-import { ShoppingBagDrawer } from "./components/bag/shopping-bag-drawer"
-import { DemoCheckoutModal } from "./components/bag/demo-checkout-modal"
 import { Navbar } from "./components/navbar"
-import { Footer } from "./components/footer"
 import { LoadingScreen } from "./components/ui/loading-screen"
 import { WavesOverlay } from "./components/ui/waves-overlay"
 import { CustomCursor } from "./components/ui/custom-cursor"
 import { EditorialTicker } from "./components/ui/editorial-ticker"
-import { TaglineReveal } from "./components/ui/tagline-reveal"
 import { DemoModal } from "./components/ui/demo-modal"
 import { useNavbarState } from "./hooks/use-navbar-state"
-import { HeroSection } from "./sections/hero-section"
-import { AcousticPhilosophy } from "./components/sections/acoustic-philosophy"
-import { InteractiveInspector } from "./components/sections/interactive-inspector"
-import { EngineeringAnatomy } from "./components/sections/engineering-anatomy"
-import { AuditionLab } from "./components/sections/audition-lab"
-import { ProductCustomizer } from "./components/sections/product-customizer"
-import { ComparisonMatrix } from "./components/sections/comparison-matrix"
-import { SpecificationsTable } from "./components/sections/specifications-table"
-import { SupportAndCare } from "./components/sections/support-and-care"
-import { CTASection } from "./sections/cta-section"
 import { soundEngine } from "./lib/audio-synthesizer"
+
+// 10-Chapter Interactive Storytelling Suite
+import { AtherArrival } from "./components/sections/ather-arrival"
+import { AtherIdea } from "./components/sections/ather-idea"
+import { AtherMachine } from "./components/sections/ather-machine"
+import { AtherDetails } from "./components/sections/ather-details"
+import { AtherMovement } from "./components/sections/ather-movement"
+import { AtherIntelligence } from "./components/sections/ather-intelligence"
+import { AtherExperience } from "./components/sections/ather-experience"
+import { AtherSpecifications } from "./components/sections/ather-specifications"
+import { AtherConclusion } from "./components/sections/ather-conclusion"
+import { AtherCredits } from "./components/sections/ather-credits"
 
 const ShaderAnimation = lazy(() =>
   import("./components/ui/shader-animation").then((module) => ({
@@ -42,7 +39,7 @@ export default function App() {
   const isScrolled = useNavbarState(scrollY, 48)
 
   useEffect(() => {
-    const duration = 850
+    const duration = 750
     const start = window.performance.now()
     let frameId = 0
 
@@ -68,102 +65,85 @@ export default function App() {
   }, [])
 
   return (
-    <BagProvider>
-      <div className="relative overflow-x-clip bg-[#02050e] text-white selection:bg-sky-500/25 selection:text-white">
-        {/* Accessible skip link */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-sky-400 focus:text-black focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:outline-none"
-        >
-          Skip to content
-        </a>
+    <div className="relative overflow-x-clip bg-[#030712] text-white selection:bg-emerald-500/30 selection:text-white">
+      {/* Accessible skip link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-emerald-400 focus:text-black focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:outline-none"
+      >
+        Skip to content
+      </a>
 
-        {/* Fine-pointer trailing custom cursor */}
-        <CustomCursor />
+      {/* Fine-pointer trailing custom cursor */}
+      <CustomCursor />
 
-        {/* Cinematic Monolith Aperture Loader */}
-        <AnimatePresence>
-          {isLoading ? <LoadingScreen key="loading-screen" progress={loadingProgress} /> : null}
-        </AnimatePresence>
+      {/* Cinematic Aperture Loader */}
+      <AnimatePresence>
+        {isLoading ? <LoadingScreen key="loading-screen" progress={loadingProgress} /> : null}
+      </AnimatePresence>
 
-        {/* Studio Inquiry Demo Modal */}
-        <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
+      {/* Studio Inquiry / Test-Ride Prototype Modal */}
+      <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
 
-        {/* Interactive Shopping Bag Slide-Over Drawer */}
-        <ShoppingBagDrawer />
+      {/* Ambient Shader Canvas in background */}
+      <Suspense fallback={<div className="fixed inset-0 z-0 bg-[#030712]" />}>
+        <ShaderAnimation scrollYProgress={scrollYProgress} />
+      </Suspense>
 
-        {/* Complete Simulated Prototype Checkout Modal */}
-        <DemoCheckoutModal />
-
-        {/* Fullscreen Atmospheric Nebula WebGL Shader */}
-        <Suspense fallback={<div className="fixed inset-0 z-0 bg-black" />}>
-          <ShaderAnimation scrollYProgress={scrollYProgress} />
-        </Suspense>
-
-        {/* Hardware-Accelerated Responsive Waves Overlay */}
-        <div className="pointer-events-none fixed inset-0 z-[1]">
-          <WavesOverlay className="opacity-35" />
-          <div className="ambient-noise opacity-10" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_32%,rgba(2,6,23,0.3)_75%,rgba(2,6,23,0.65))]" />
-        </div>
-
-        {/* Floating Spatial Navigation Header */}
-        <Navbar isScrolled={isScrolled} onOpenDemo={() => setIsDemoOpen(true)} />
-
-        <motion.div
-          initial={false}
-          animate={{
-            opacity: isLoading ? 0.4 : 1,
-            scale: isLoading ? 0.99 : 1,
-          }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="relative"
-        >
-          <main id="main-content" ref={mainRef} className="relative z-10 overflow-x-clip">
-            {/* Section 01: Spatial 3D Hero */}
-            <HeroSection onOpenDemo={() => setIsDemoOpen(true)} />
-
-            {/* Precision Kinetic Audio Hardware Ticker */}
-            <EditorialTicker />
-
-            {/* Acoustic Manifesto Word-by-Word Scrubbed Typography */}
-            <TaglineReveal />
-
-            {/* Section 02: Acoustic Philosophy & Architecture */}
-            <AcousticPhilosophy />
-
-            {/* Section 03: 3D Hardware Inspector & Turntable */}
-            <InteractiveInspector />
-
-            {/* Section 04: Engineering Anatomy Deep Dive */}
-            <EngineeringAnatomy />
-
-            {/* Section 05: Sound Audition Lab with Live Oscilloscope */}
-            <AuditionLab />
-
-            {/* Section 06: Finish Customizer & Bag Integration */}
-            <ProductCustomizer />
-
-            {/* Section 07: Standard vs Studio Reference Comparison Matrix */}
-            <ComparisonMatrix />
-
-            {/* Section 08: Technical Specifications Grid */}
-            <SpecificationsTable />
-
-            {/* Section 09: Longevity, Repairability & FAQ */}
-            <SupportAndCare />
-
-            {/* Section 10: Closing Studio CTA */}
-            <CTASection
-              scrollYProgress={scrollYProgress}
-              onOpenDemo={() => setIsDemoOpen(true)}
-            />
-
-            {/* Comprehensive Studio Footer */}
-            <Footer onOpenDemo={() => setIsDemoOpen(true)} />
-          </main>
-        </motion.div>
+      {/* Hardware-Accelerated Responsive Atmosphere */}
+      <div className="pointer-events-none fixed inset-0 z-[1]">
+        <WavesOverlay className="opacity-25" />
+        <div className="ambient-noise opacity-10" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(3,7,18,0.4)_75%,rgba(3,7,18,0.75))]" />
       </div>
-    </BagProvider>
+
+      {/* Floating Spatial Navigation Header */}
+      <Navbar isScrolled={isScrolled} onOpenDemo={() => setIsDemoOpen(true)} />
+
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: isLoading ? 0.3 : 1,
+          scale: isLoading ? 0.99 : 1,
+        }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="relative"
+      >
+        <main id="main-content" ref={mainRef} className="relative z-10 overflow-x-clip">
+          {/* Chapter 01: Arrival */}
+          <AtherArrival onOpenDemo={() => setIsDemoOpen(true)} />
+
+          {/* Telemetry Precision Ticker */}
+          <EditorialTicker />
+
+          {/* Chapter 02: The Idea */}
+          <AtherIdea />
+
+          {/* Chapter 03: The Machine (3D WebGL Vehicle Visualizer) */}
+          <AtherMachine />
+
+          {/* Chapter 04: The Details (Hardware & Ergonomics Explorer) */}
+          <AtherDetails />
+
+          {/* Chapter 05: The Movement (Hold-to-Accelerate Sprint Engine) */}
+          <AtherMovement />
+
+          {/* Chapter 06: The Intelligence (AtherStack™ 6.0 Touch Cockpit) */}
+          <AtherIntelligence />
+
+          {/* Chapter 07: The Experience (Urban Mobility Scenarios) */}
+          <AtherExperience />
+
+          {/* Chapter 08: The Specifications (Categorized Verified Matrix) */}
+          <AtherSpecifications />
+
+          {/* Chapter 09: The Conclusion (Closing Impression & Philosophy) */}
+          <AtherConclusion onOpenDemo={() => setIsDemoOpen(true)} />
+
+          {/* Chapter 10: Project Credits & Disclaimers */}
+          <AtherCredits />
+        </main>
+      </motion.div>
+    </div>
   )
 }
