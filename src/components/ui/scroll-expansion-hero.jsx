@@ -45,7 +45,8 @@ export function ScrollExpansionHero({
   title,
   description,
   ctaLabel,
-  ctaHref,
+  ctaHref = "#configure",
+  secondaryHref = "#philosophy",
   onOpenDemo,
 }) {
   const ref = useRef(null)
@@ -65,7 +66,7 @@ export function ScrollExpansionHero({
 
   return (
     <section ref={ref} id="overview" className="relative h-[200vh] sm:h-[210vh] lg:h-[220vh]">
-      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden px-5 pt-24 sm:px-8 sm:pt-28 lg:px-12">
+      <div className="sticky top-0 flex min-h-[100dvh] items-center overflow-hidden px-5 pt-24 sm:px-8 sm:pt-28 lg:px-12">
         <motion.div
           style={{ scale: glowScale }}
           className="pointer-events-none absolute left-1/2 top-[46%] h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.12),transparent_70%)] blur-2xl sm:h-[30rem] sm:w-[30rem] lg:h-[34rem] lg:w-[34rem]"
@@ -107,34 +108,44 @@ export function ScrollExpansionHero({
               transition={{ duration: 0.75, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
               className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10"
             >
-              <button
-                type="button"
-                onClick={() => {
-                  soundEngine.playClick()
-                  onOpenDemo ? onOpenDemo() : null
-                }}
+              <a
+                href={ctaHref}
+                onClick={() => soundEngine.playClick()}
                 className="inline-flex items-center gap-2 rounded-full border border-sky-400/50 bg-sky-500/20 px-6 py-3.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_8px_24px_rgba(56,189,248,0.25)] backdrop-blur-md transition-all duration-150 hover:bg-sky-500/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
               >
                 <span>{ctaLabel}</span>
                 <span>→</span>
-              </button>
+              </a>
 
               <a
-                href={ctaHref}
+                href={secondaryHref}
                 onClick={() => soundEngine.playHover()}
                 className="inline-flex items-center rounded-full border border-white/12 bg-white/[0.04] px-6 py-3.5 text-sm font-medium text-white/80 transition-all duration-150 hover:border-white/22 hover:bg-white/[0.08] hover:text-white active:scale-[0.98]"
               >
-                Explore architecture
+                Explore Acoustics
               </a>
+
+              {onOpenDemo && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    soundEngine.playClick()
+                    onOpenDemo()
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-3.5 text-xs font-mono uppercase text-white/50 hover:text-white hover:border-white/20 transition-all active:scale-[0.98]"
+                >
+                  <span>Inquire ⌘K</span>
+                </button>
+              )}
             </motion.div>
 
-            <div className="mt-10 flex items-center gap-6 border-t border-white/8 pt-6 text-xs font-mono text-white/45">
+            <div className="mt-10 flex flex-wrap items-center gap-6 border-t border-white/8 pt-6 text-xs font-mono text-white/45">
               <div className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                <span>60FPS COMPOSITOR</span>
+                <span>45MM PLANAR-MAGNETIC</span>
               </div>
-              <div>WEBGL 2.0</div>
-              <div>ZERO VRAM LEAKS</div>
+              <div>CNC MAGNESIUM UNIBODY</div>
+              <div>10 HZ – 48 KHZ</div>
             </div>
           </motion.div>
 

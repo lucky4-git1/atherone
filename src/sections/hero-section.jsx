@@ -3,11 +3,12 @@ import { ScrollExpansionHero } from "../components/ui/scroll-expansion-hero"
 export function HeroSection({ onOpenDemo }) {
   return (
     <ScrollExpansionHero
-      eyebrow="Spatial Launch Architecture"
-      title="A flagship interface that commands attention."
-      description="Engineered for serious software reveals. Spatial perspective, cinema-grade kinetic motion, and an atmospheric WebGL backdrop operating in harmonic synchrony."
-      ctaLabel="Request demonstration"
-      ctaHref="#experience"
+      eyebrow="Acoustic Hardware Prototype"
+      title="Sound, engineered as an experience."
+      description="Circumaural acoustic headphones with custom 45mm planar-magnetic transducers, CNC magnesium-aluminum unibody chassis, and uncolored studio transparency."
+      ctaLabel="Configure Aether One"
+      ctaHref="#configure"
+      secondaryHref="#philosophy"
       onOpenDemo={onOpenDemo}
     />
   )

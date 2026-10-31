@@ -19,7 +19,7 @@ code, kbd, samp, pre {
 
 ::selection {
   background-color: rgba(56, 189, 248, 0.28);
-  color: #ffffff;
+  color: #f0f6ff;
 }
 
 /* Custom themed scrollbar */
